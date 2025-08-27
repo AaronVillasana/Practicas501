@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$NUB Store - 8 Products</title>
+    
+    <!-- Favicon - NUB Cat Mascot -->
+    <link rel="icon" type="image/png" href="https://www.nubcat.xyz/_next/static/media/mascot.8cb4fc3c.png">
+    <link rel="shortcut icon" type="image/png" href="https://www.nubcat.xyz/_next/static/media/mascot.8cb4fc3c.png">
+    <link rel="apple-touch-icon" href="https://www.nubcat.xyz/_next/static/media/mascot.8cb4fc3c.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Preload Stripe resources for faster loading -->
+    <link rel="preload" href="https://js.stripe.com/v3/buy-button.js" as="script">
+    <link rel="dns-prefetch" href="//js.stripe.com">
+    <link rel="dns-prefetch" href="//m.stripe.com">
+    <link rel="dns-prefetch" href="//checkout.stripe.com">
+    
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    
+    <style>
+        /* Reset y configuración base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #ffffff;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header minimalista */
+        .header {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e5e5;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover {
+            color: #666;
+        }
+
+        .currency-selector {
+            background: none;
+            border: 1px solid #e5e5e5;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section minimalista */
+        .hero {
+            text-align: center;
+            padding: 4rem 0 2rem;
+            background: #fafafa;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Grid de productos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 3rem 0;
+        }
+
+        /* Cards de productos minimalistas */
+        .product-card {
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            border-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            background: #f8f8f8;
+            padding: 10px;
+        }
+
+        .product-content {
+            padding: 1.5rem;
+        }
+
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            height: 2.8em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .product-actions stripe-buy-button {
+            flex: 1;
+            min-height: 48px;
+        }
+
+        /* Estilo personalizado para el botón de Stripe */
+        .product-actions stripe-buy-button {
+            flex: 1;
+            min-height: 48px;
+        }
+
+        /* Personalización del botón de Stripe */
+        .product-actions stripe-buy-button {
+            --stripe-button-background: #1a1a1a !important;
+            --stripe-button-color: #ffffff !important;
+            --stripe-button-border-radius: 4px !important;
+            --stripe-button-font-weight: 600 !important;
+            --stripe-button-padding: 0.8rem 1.5rem !important;
+            --stripe-button-hover-background: #333333 !important;
+        }
+
+        /* Personalización del botón de Stripe */
+        .product-actions stripe-buy-button {
+            --stripe-button-background: #1a1a1a !important;
+            --stripe-button-color: #ffffff !important;
+            --stripe-button-border-radius: 4px !important;
+            --stripe-button-font-weight: 600 !important;
+            --stripe-button-padding: 0.8rem 1.5rem !important;
+            --stripe-button-hover-background: #333333 !important;
+        }
+
+        /* Optimizaciones de rendimiento para botones Stripe */
+        .product-actions stripe-buy-button {
+            --stripe-button-background: #1a1a1a !important;
+            --stripe-button-color: #ffffff !important;
+            --stripe-button-border-radius: 4px !important;
+            --stripe-button-font-weight: 600 !important;
+            --stripe-button-padding: 0.8rem 1.5rem !important;
+            --stripe-button-hover-background: #333333 !important;
+            /* Optimizaciones de rendimiento */
+            will-change: transform;
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        /* Placeholder para botones mientras cargan */
+        .product-actions stripe-buy-button:not(:defined) {
+            background: #1a1a1a;
+            color: white;
+            border-radius: 4px;
+            padding: 0.8rem 1.5rem;
+            font-weight: 600;
+            display: inline-block;
+            min-height: 48px;
+            min-width: 120px;
+            text-align: center;
+            line-height: 1.2;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-actions stripe-buy-button:not(:defined)::before {
+            content: "Loading...";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background: #1a1a1a;
+            border: none;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            flex: 1;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            background: #333;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #ffffff 0%, #f8f8f8 100%);
+            border: 2px solid #e5e5e5;
+            color: #999;
+            padding: 0;
+            border-radius: 8px;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-decoration: none;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .btn-secondary:hover {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(255, 107, 107, 0.2);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+        }
+
+        .btn-secondary i {
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover i {
+            transform: scale(1.1);
+            color: #ff6b6b;
+        }
+
+        /* Footer minimalista */
+        .footer {
+            background: #fafafa;
+            border-top: 1px solid #e5e5e5;
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .footer-section p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .footer-section a {
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .footer-section a:hover {
+            color: #1a1a1a;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 1.5rem;
+                padding: 2rem 0;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .btn-secondary {
+                align-self: center;
+            }
+        }
+
+        /* Animaciones suaves */
+        .product-card {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+        .product-card:nth-child(7) { animation-delay: 0.7s; }
+        .product-card:nth-child(8) { animation-delay: 0.8s; }
+    </style>
+    
+    <!-- JavaScript optimizado para carga rápida de botones Stripe -->
+    <script>
+        // Optimizaciones de rendimiento para Stripe
+        document.addEventListener('DOMContentLoaded', function() {
+            // Precargar recursos críticos
+            const preloadStripe = () => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'script';
+                link.href = 'https://js.stripe.com/v3/buy-button.js';
+                document.head.appendChild(link);
+            };
+            
+            // Cargar Stripe de forma optimizada
+            const loadStripe = () => {
+                if (typeof Stripe === 'undefined') {
+                    const script = document.createElement('script');
+                    script.src = 'https://js.stripe.com/v3/buy-button.js';
+                    script.async = true;
+                    script.defer = true;
+                    script.onload = () => {
+                        // Marcar botones como cargados
+                        document.querySelectorAll('stripe-buy-button').forEach(btn => {
+                            btn.style.opacity = '1';
+                        });
+                    };
+                    document.head.appendChild(script);
+                }
+            };
+            
+            // Inicializar optimizaciones
+            preloadStripe();
+            loadStripe();
+            
+            // Lazy loading para botones fuera de viewport
+            const observerOptions = {
+                root: null,
+                rootMargin: '50px',
+                threshold: 0.1
+            };
+            
+            const buttonObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const button = entry.target;
+                        button.style.opacity = '1';
+                        buttonObserver.unobserve(button);
+                    }
+                });
+            }, observerOptions);
+            
+            // Observar botones para lazy loading
+            document.querySelectorAll('stripe-buy-button').forEach(btn => {
+                btn.style.opacity = '0';
+                btn.style.transition = 'opacity 0.3s ease';
+                buttonObserver.observe(btn);
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <img src="https://i.imgur.com/dVFBYlj.png" alt="$NUB Store Logo" style="height: 40px; width: auto;">
+                    $NUB Store
+                </a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">Cart</a></li>
+                        <li><a href="#">Account</a></li>
+                        <li>
+                            <select class="currency-selector">
+                                <option value="MXN">MXN</option>
+                                <option value="USD">USD</option>
+                                <option value="EUR">EUR</option>
+                            </select>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <img src="https://imgproxy.fourthwall.com/qQxrXM8GOm-9DaQEXu8U7gT0BXSxxenIpaVcQMMefWQ/w:130/dpr:2/sm:1/enc/BS9t5zlkv1sjUUaI/3VJ_XQE3RbSNrR2o/jVz5jmN68WjG9rvi/XpIXw5BrXs4z8kw4/nlL9XvhLOE5qS3P-/sTfCH_XwE7fkJr6B/HHLqUTzpror7bD0s/SSablG1hnFjhAU1p/zs_kUQJGIliJ1TTP/p5vkenRuWcN5rQKS/0jA5MAYHa9i5w2xV/9cs7U9CVaRjvtkz1/g43X5ZL9ILNLHDBc/Jf_bGfuEyW7sOyfP/OFMrB-OQT4cM89VK/gwP_zQHXjqYgf9mz" alt="$NUB Store Logo" style="height: 120px; width: auto; margin-bottom: 1rem;">
+            <p>GtDZKAqvMZMnti46ZewMiXCa4oXF4bZxwQPoKzXPFxZn</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="products-grid">
+            <!-- Product 1: Fantastic Stickers -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/vI95sqBfvGVbey4fSX72EFTQdHHMQMw3MSPtiTj0Yl4/w:900/sm:1/enc/JZXpjpvs-x0CNeXa/j2ceYXm99fC21nBT/oI5xyku9gksZe4im/6zRVdo9r94c8kOtn/ruxPlmcpaHdBh-Qr/7WoAXpTELJyDUQfR/RgrptzpFWISo9xC5/Ajy_CoyLPSnPO4-Z/UJYQoC2HJCWMMtHN/8HkY1UxKgII7GZHD/EB1xNYQWJZIgOS-p/SH-joK5D2E_bg_NO/gcD4b4FNyHJdNhyD/brcy_g"
+                     alt="Fantastic Stickers" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Fantastic Stickers</h3>
+                    <p class="product-description">this stickersheet is fantastic! 5.8″ × 8.3″ (15cm x 21cm). made to order!! ZERO WASTE!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$190.13 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1Rvn6eDzkSkeCCn2KRBvlnAo"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 2: Silly Tee -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/dAy6SvsK4o9qFj7jJk8NaU6pN7LRr50-xkvs-5Nby3E/w:900/sm:1/enc/vhwkS2gDHmVN7GCn/mgT7wGsBTsCxpX9B/zHe9M1-u4sX72u9D/Lp1tw1gOa2O7qxqG/5uckomheNjSIMxhQ/vu6l0Ouqw6ITcq1Q/ugQE1amIEOxvzazH/dpjln7nPpHYuAdyu/fR3mwd2ayRPcJC6U/e3GXnPyoDHULCzgr/n7-YT1GfdnvRumlK/P6eQfpIaLjagnhrM/368c_x9DVaErcXZW/u0sL9w" 
+                     alt="2 Silly Tee" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">🤪2 Silly Tee</h3>
+                    <p class="product-description">oh no he got too silly!! \(˚☐˚")/ 100% cotton crew neck t-shirt. made to order!! ZERO WASTE!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$570.78 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1Rvn7xDzkSkeCCn21bxVBrWQ"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+
+                        <!-- Product 3: Custom Pet Merch -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/iY9IEFxA4qIPEhWipyDpi2yBEWeFtc3CX9RqMXrfc8Q/w:900/sm:1/enc/r_bjwtGwxSSrGDLv/4PSG0pqI3I0LVbdj/9bsoHKUAoXAskZfV/mHbGhywLvZib7i2m/9GMsf1Hzcg0VU9P6/OWI3pwfJRVbDCD3J/ZxCU8L-5PpmQZbck/R9whXF7IDN2d-dpF/YNMlMK2geibTKA1E/30csVRW4-_0HrZix/GQkK9CVWxAOM-oP3/LBmcEPaoAp89__II/DVJIoFgawa7VSodt/M3_3gg"
+                     alt="Custom Pet Merch" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">✏️Custom Pet Merch😺🐶🐰🐥</h3>
+                    <p class="product-description">IM GONNA DRAW YOUR PET! (1 purchase = 1 pet) custom merch with tee & hoodie. email photo to nub@kers.co. made to order!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$4,757.85 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1Rvn8wDzkSkeCCn2IyQLQNRw"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+
+                        <!-- Product 4: Yapville Knit -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/1felbQNIl_Xl2ZqVzC5aUYgOhmgzTsFtlUgKyJEfySA/w:900/sm:1/enc/2dNxO3smcFzyiXCa/quHhrmfq2TTRTCBy/tb9DTY_fpzHstQgy/hxPSC7HsmYrh24Ab/YUjzcYdqq7cKii93/dUUTVs7p-Lwpxwom/h2MPImxUCt_SfcyA/JXvXOEeN6teK1oF6/nnr5RP76UvwNj5jG/O7rxrVGHV1VR7_hv/JMHBgIzJk1YFUz_N/y_kuENSsGHaJN_Bc/nmMVPVrr2lHXswHw/dN3hog"
+                     alt="Yapville Knit" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Yapville Knit</h3>
+                    <p class="product-description">born n raised in yapville! 55% cotton/ 45% polyester crewneck knitted sweater. runs large. made to order!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$1,522.38 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1RvmsdDzkSkeCCn2OqUUzuZ5"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 5: Devil Tee -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/v0_Nyhi_lksxipbJIInFpHw0GhINXlO7GI_aZApKD1s/w:900/sm:1/enc/qG0DQR7uQ3Z_EYD-/OviuZt9O1ZdObtqy/mJnBJASsxLgjnc75/Lnx5SzQ6aSNbohKR/qTVkOuO0JfzU-6cp/xHJmtwByRNlUmUuJ/dD3SIZALDB5x57q-/nzuXXXCtQlZ_jV7c/Ik8rxKJQ_pNhtt1M/3rLSEFqcgY2JHF1K/CQTLWhXZ2upkfL5k/4wiYhVVdtsJhDpb5/QvjR4MsfxQDBa09c/JExwdA" 
+                     alt="Devil Tee" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">⋆༺𓆩☠︎︎ 𝔇𝔢𝔳𝔦𝔩 𝔗𝔢𝔢 ☠︎︎𓆪༻⋆</h3>
+                    <p class="product-description">MADE TO MATCH WITH ANGEL TEE! 100% cotton crew neck t-shirt. made to order!! ZERO WASTE!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$570.78 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1RvmufDzkSkeCCn2rWuesIUs"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 6: Sick Tee -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/mx6zRiQvBxvUnqD0FDif7d0e7eaXg976oqQWK_4m7tE/w:900/sm:1/enc/V2HUnosWeGSfIWmP/_KSNBb79467I8zmM/94CbC4WimAo0HvTK/Y1wVFqVH1Q0DWope/uiEV3wJzbY3-_exd/n1C3rtOMWG-ZObZu/MbDSoEBQdCY5ByPI/RSRtG5Mp-gVa5_Ke/mURaDxYcKPy-IzPn/Mtb_QPwQ3VdNm9Nm/HQD13Af-9Eb7vTsb/wDzIzsrvy5TTqcjx/mRjGzie6fgKkpINl/Gs2R7Q" 
+                     alt="Sick Tee" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Sick Tee</h3>
+                    <p class="product-description">100% cotton crew neck t-shirt. made to order!! ZERO WASTE!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$570.78 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1RvmzBDzkSkeCCn2S5tY6dzR"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 7: Recover Tee -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/-ct9LXM8GIgeRnkHSQE0hv2MBctOrhkianKPBqMQ6AU/w:900/sm:1/enc/kL7RdAi5CNwxgJRZ/kZqQEXkvTrt0FfU2/vZelbN2LmCSNw7HB/iWzQiLdo3ABoY-1e/Wf5GC9zTh_5N0rUQ/DKsbbNph54O49BrM/E5PajHlCCPmvMvOn/PQGIVVVfxz-pkWTN/GS6bLfBu266Pe195/iAuD2pDcr4ksuGej/mJ1ZIvebzqkBlEbc/n09v3bMXunjv5lG3/lQcTRSiuQDcYoO0W/ti7y_A" 
+                     alt="Recover Tee" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Recover Tee</h3>
+                    <p class="product-description">100% cotton crew neck t-shirt. made to order!! ZERO WASTE!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$570.78 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1Rvn0GDzkSkeCCn2ITauOgjg"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Product 8: Bounce Tee -->
+            <article class="product-card">
+                <img src="https://imgproxy.fourthwall.com/488o_7J7kqPTLLuykRU_nxOLhPWieD0Oh9GD0595zvs/w:900/sm:1/enc/xnYrrFLzrhydBczh/g8FgqibSLW8LLssf/Bn7UHDVVxWPx_WDK/CEbz5sAeZCE5rcyM/CbWnpbZA6K96-GLP/n06-J930YsCxQZ6x/lhGvmo8J_oo2KYkA/ELLGHBUGhZKrCtMV/RjUxObiypwal55Ap/NOUoHpDC__AmPsQO/8FbE5bM2qqr3abEd/9qXG0D52FBWvY7ky/MX0R2B0HWcVR6rek/4_QXig" 
+                     alt="Bounce Tee" class="product-image">
+                <div class="product-content">
+                    <h3 class="product-title">Bounce Tee</h3>
+                    <p class="product-description">THIS WAS THE MYSTERY TEE!! theme: blood, color: black. 100% cotton crew neck t-shirt. made to order!! ZERO WASTE!! ദ്ദി ˉ͈̀꒳ˉ͈́ )☆ﾟ.*･ₜₕₐₙₖ ᵤ ｡ﾟᵕ☆</p>
+                    <div class="product-price">$570.78 MXN</div>
+                    <div class="product-actions">
+                        <stripe-buy-button
+                          buy-button-id="buy_btn_1Rvn1LDzkSkeCCn2al0VpVEC"
+                          publishable-key="pk_test_51RviGdDzkSkeCCn2bLq9IM8rz8ycHwf2ZTggYQFRR6sO7L8Ejj07XeBkVkMgJiDd8wVLEJCCDY7jXO5yIhHJiCHW00NLB4fOzJ"
+                        >
+                        </stripe-buy-button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>$NUB Store</h3>
+                    <p>Your trusted store for custom clothing, stickers, and personalized merchandise. Made to order with love and zero waste.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>
+                        <i class="fas fa-phone"></i> +52 (415) 101-6699<br>
+                        <i class="fas fa-envelope"></i> aajuvi@gmail.com<br>
+                        <i class="fas fa-map-marker-alt"></i> Made to order worldwide
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h3>Info</h3>
+                    <p>
+                        <a href="#">Terms of Service</a><br>
+                        <a href="#">Privacy Policy</a><br>
+                        <a href="#">Returns & FAQ</a><br>
+                        <a href="#">Made to Order</a><br>
+                        <a href="#">Zero Waste</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
