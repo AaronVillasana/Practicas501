@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Aviso de Privacidad | Copper Cotton</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #B87333;
+            --primary-dark: #8B5A2B;
+            --secondary-color: #2C3E50;
+            --background-light: #f5f5f5;
+            --background-white: #fff;
+            --text-primary: #0a0a0a;
+            --text-secondary: #2a2a2a;
+            --border-color: #d0d0d0;
+            --shadow-light: 0 4px 25px rgba(0, 0, 0, 0.08);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, var(--background-light) 0%, var(--background-white) 100%);
+            color: var(--text-primary);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 700px;
+            margin: 4rem auto 2rem auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: var(--shadow-light);
+            padding: 3rem 2.2rem 2.2rem 2.2rem;
+            position: relative;
+        }
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 5px;
+            border-radius: 18px 18px 0 0;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+        h1 {
+            color: var(--primary-color);
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            letter-spacing: 1.5px;
+        }
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.15rem;
+            margin-top: 2.2rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        p, li {
+            font-size: 1.07rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        ul {
+            margin-left: 1.2rem;
+        }
+        a {
+            color: var(--primary-color);
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: var(--primary-dark);
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 2.5rem;
+            font-size: 1rem;
+            color: var(--secondary-color);
+            background: #f5f5f5;
+            padding: 0.5rem 1.2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            transition: background 0.2s, color 0.2s;
+        }
+        .back-link:hover {
+            background: var(--primary-color);
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Aviso de Privacidad</h1>
+        <p>En <b>Copper Cotton</b>, la privacidad de nuestros clientes es fundamental. Los datos personales que recopilamos se utilizan únicamente para procesar pedidos, brindar atención personalizada y mejorar nuestros servicios. <b>No compartimos tu información con terceros</b>, salvo requerimiento legal.</p>
+        <h2>¿Qué datos recopilamos?</h2>
+        <ul>
+            <li>Nombre y datos de contacto</li>
+            <li>Información de envío</li>
+            <li>Historial de compras</li>
+        </ul>
+        <h2>¿Cómo protegemos tus datos?</h2>
+        <p>Utilizamos medidas de seguridad administrativas y técnicas para proteger tu información personal.</p>
+        <h2>Contacto</h2>
+        <p>Si tienes dudas sobre este aviso, contáctanos en <a href="mailto:info@coppercotton.mx">info@coppercotton.mx</a>.</p>
+        <a class="back-link" href="v2.html">Volver al sitio</a>
+    </div>
+</body>
+</html>
