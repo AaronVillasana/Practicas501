@@ -1,0 +1,31 @@
+html, body {
+  height: 100%;
+  background-color: black;
+}
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+footer {
+  margin-top: auto;
+}
+
+.carousel-img {
+  width: 700px;
+  height: 700px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+body {
+  font-family: "Noto Serif", serif;
+}
+
+h1 {
+  font-family: "Libertinus Serif Display", system-ui;
+}
+
+h2 {
+  font-family: "Libertinus Serif Display", system-ui;
+}
