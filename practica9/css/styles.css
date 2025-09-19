@@ -1,3 +1,17 @@
 body {
     background-color: rgb(222, 255, 215);
 }
+
+.planet-logo{
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  width: 84px;         
+  height: auto;
+  z-index: 1030;       
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
+}
+
+@media (max-width: 576px){
+  .planet-logo{ width: 56px; top: 8px; left: 8px; }
+}
