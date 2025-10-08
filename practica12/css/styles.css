@@ -1,0 +1,269 @@
+/* ===== Estilos generales (fondo y tipografía) ===== */
+body {
+	background-image: url('../img/background.png');
+	background-size: cover;
+	background-position: center center;
+	background-attachment: fixed;
+	color: #ffffff;
+	-webkit-font-smoothing: antialiased;
+	font-family: 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+body, body * {
+	color: #ffffff !important;
+}
+
+button, button *,
+a, a *,
+input, input::placeholder, textarea, textarea::placeholder,
+select, option,
+label, label *,
+svg, svg * {
+	color: #ffffff !important;
+	fill: #ffffff !important;
+}
+
+input::placeholder, textarea::placeholder {
+	color: rgba(255,255,255,0.8) !important;
+}
+
+::selection { background: rgba(255,255,255,0.12); color: #ffffff; }
+
+/* ===== Carátulas ===== */
+.perfil-img {
+	width: 150px;
+	height: 150px;
+	object-fit: cover;
+	border-radius: 8px;
+	box-shadow: 0 6px 24px rgba(2,6,12,0.6), inset 0 1px 0 rgba(255,255,255,0.03);
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+.perfil-img:hover { transform: scale(1.03); }
+
+/* ===== Contenedor del botón de sample ===== */
+.cover-container {
+	position: relative;
+	display: inline-block;
+}
+
+/* ===== Botón principal de reproducción ===== */
+.play-sample-btn {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 64px;
+	height: 64px;
+	border-radius: 999px;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	background: rgba(0,0,0,0.45);
+	border: 1px solid rgba(255,255,255,0.12);
+	box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+	cursor: pointer;
+	z-index: 5;
+	transition: transform .12s ease, background .12s ease;
+	--sample-duration: 15s;
+}
+.play-sample-btn:hover { transform: translate(-50%, -50%) scale(1.05); }
+.play-sample-btn.playing { background: rgba(255,255,255,0.1); }
+.play-sample-btn .icon { font-size: 1.1rem; transition: opacity .2s ease; }
+
+/* ===== Contador centrado ===== */
+.play-sample-btn .countdown {
+	position: absolute;
+	inset: 0;
+	display: none;
+	align-items: center;
+	justify-content: center;
+	font-size: 1rem;
+	font-weight: 700;
+	line-height: 1;
+	color: #fff;
+	background: transparent;
+	transition: opacity .2s ease;
+}
+
+/* Mostrar el número mientras está reproduciendo */
+.play-sample-btn.playing:not(.paused) .countdown { display: flex; }
+
+/* Ocultar icono ▶ cuando suena */
+.play-sample-btn.playing:not(.paused) .icon { display: none; }
+
+/* Si no quieres ver el contador en ningún momento: */
+body.hide-countdown .countdown { display: none !important; }
+
+/* ===== Texto de canción ===== */
+.song-info .fw-bold { font-size: 1.05rem; color: #fff; }
+.song-info .fw-bold, h1 {
+	font-family: 'Bebas Neue', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+	letter-spacing: 0.04em;
+}
+.song-info .small { font-size: 0.85rem; color: rgba(255,255,255,1) !important; }
+.text-muted, .text-muted * { color: #ffffff !important; }
+.song-info { display: inline-block; margin-left: .5rem; }
+
+/* ===== Tarjetas de cada fila ===== */
+.row.border {
+	background: rgba(255,255,255,0.02) !important;
+	border: 1px solid rgba(255,255,255,0.02) !important;
+	border-radius: 12px;
+	margin-bottom: 1rem;
+	backdrop-filter: blur(2px) saturate(105%);
+	box-shadow: 0 6px 12px rgba(2,3,6,0.28) !important;
+	position: relative;
+}
+
+.container p { margin-bottom: 0.5rem; }
+
+/* ===== Grupo de botones (Spotify / eliminar) ===== */
+.btn-group .btn { margin-left: 0.5rem; }
+.btn-group { display: inline-flex; align-items: center; gap: .5rem; }
+
+.btn-liquid {
+	position: relative;
+	overflow: hidden;
+	z-index: 0;
+	border-radius: 999px;
+	transition: transform .12s ease, box-shadow .12s ease;
+	box-shadow: 0 6px 18px rgba(0,0,0,0.35), inset 0 -2px 0 rgba(255,255,255,0.03);
+}
+.btn-liquid::after {
+	content: '';
+	position: absolute;
+	top: -50%; left: -50%;
+	width: 200%; height: 200%;
+	background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.03), transparent 15%),
+	            radial-gradient(circle at 70% 80%, rgba(255,255,255,0.02), transparent 10%);
+	opacity: .28; pointer-events: none; mix-blend-mode: overlay;
+	transition: transform .4s ease;
+}
+.btn-liquid:active { transform: translateY(1px) scale(.995); }
+.btn-liquid:hover::after { transform: translate(6%, 6%) scale(1); }
+
+.btn-success {
+	background: linear-gradient(180deg, rgba(36,192,107,0.16), rgba(26,168,90,0.12));
+	border-color: rgba(255,255,255,0.06);
+	color: #e9f7ef;
+	box-shadow: 0 6px 12px rgba(2,6,12,0.18);
+}
+.btn-danger {
+	background: linear-gradient(180deg, rgba(241,107,107,0.14), rgba(199,65,65,0.12));
+	border-color: rgba(255,255,255,0.06);
+	color: #fff0f0;
+	box-shadow: 0 6px 12px rgba(2,6,12,0.18);
+}
+
+/* ===== Responsivo ===== */
+.container.bg-light {
+	background: transparent !important;
+	padding: 2rem;
+}
+
+@media (max-width: 576px) {
+	.row.border { padding: 1rem; }
+	.perfil-img { width: 110px; height: 110px; }
+}
+
+@media (min-width: 768px) {
+	.col-md-4.text-md-end {
+		padding-right: 6rem !important;
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+	.btn-group { margin-left: 0 !important; }
+	.row.border .btn-group {
+		position: absolute;
+		right: 1.5rem;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+/* ====== ANILLO DE PROGRESO CON COLOR DINÁMICO ====== */
+
+/* propiedades animables */
+@property --progress {
+	syntax: '<percentage>';
+	inherits: false;
+	initial-value: 0%;
+}
+@property --ring-color {
+	syntax: '<color>';
+	inherits: false;
+	initial-value: #00e676;
+}
+
+/* pista base */
+.play-sample-btn::before {
+	content: '';
+	position: absolute;
+	inset: -6px;
+	border-radius: 999px;
+	background:
+		radial-gradient(closest-side, transparent calc(100% - 6px), rgba(255,255,255,0.1) calc(100% - 6px));
+	pointer-events: none;
+}
+
+/* progreso animado */
+.play-sample-btn::after {
+	content: '';
+	position: absolute;
+	inset: -6px;
+	border-radius: 999px;
+	background:
+		conic-gradient(var(--ring-color) var(--progress), rgba(255,255,255,0.15) 0);
+	-webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5.5px));
+	mask: radial-gradient(farthest-side, transparent calc(100% - 6px), #000 calc(100% - 5.5px));
+	pointer-events: none;
+}
+
+/* animaciones simultáneas */
+.play-sample-btn.playing::after {
+	animation:
+		ring-progress var(--sample-duration) linear forwards,
+		ring-color var(--sample-duration) linear forwards;
+}
+
+/* pausa de animación cuando el audio está en pausa */
+.play-sample-btn.playing.paused::after {
+	animation-play-state: paused;
+}
+
+/* animaciones clave */
+@keyframes ring-progress {
+	from { --progress: 0%; }
+	to   { --progress: 100%; }
+}
+@keyframes ring-color {
+	0%   { --ring-color: #00e676; }  /* verde */
+	66%  { --ring-color: #ffeb3b; }  /* amarillo */
+	100% { --ring-color: #ff1744; }  /* rojo */
+}
+
+/* sincronizar color del contador */
+.play-sample-btn.playing .countdown {
+	animation: countdown-color var(--sample-duration) linear forwards;
+}
+.play-sample-btn.playing.paused .countdown {
+	animation-play-state: paused;
+}
+
+@keyframes countdown-color {
+	0%   { color: #00e676; }
+	66%  { color: #ffeb3b; }
+	100% { color: #ff1744; }
+}
+
+/* accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+	.play-sample-btn.playing::after,
+	.play-sample-btn.playing .countdown {
+		animation: none;
+		--progress: 100%;
+		--ring-color: #ff1744;
+		color: #ff1744;
+	}
+}
