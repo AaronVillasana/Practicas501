@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Menú digital de Taquería Brasimix en San Miguel de Allende, Gto." />
+  <title>Taquería Brasimix — Menú</title>
+
+  <!-- Bootstrap 5.3.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Fuentes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600;700&family=Parisienne&display=swap" rel="stylesheet" />
+
+  <!-- Estilos personalizados -->
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header class="site-header" id="inicio">
+    <div class="container header-inner">
+      <div class="brand">
+        <img class="brand-logo" src="img/logo.png" alt="Logo Taquería Brasimix" width="140" height="140" loading="lazy" decoding="async" />
+        <div class="brand-text">
+          <h1 class="brand-title">Taquería Brasimix</h1>
+          <p class="brand-subtitle">San Miguel de Allende, Gto.</p>
+        </div>
+      </div>
+
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a class="nav-link" href="#inicio">Inicio</a>
+        <a class="nav-link" href="#promos">Promos</a>
+        <a class="nav-link" href="#ubicacion">Ubicación</a>
+      </nav>
+
+      <img class="mascota" src="img/mascota.png" alt="Mascota de Brasimix" width="140" height="140" loading="lazy" decoding="async" />
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div class="hero-texts">
+        <h2 class="hero-title">Menú digital</h2>
+        <p>Horario: Lun - Dom · 1:00 pm – 11:00 pm</p>
+        <p>San Miguel de Allende, Gto.</p>
+      </div>
+    </section>
+
+    <section class="section category" id="por-taco">
+      <header class="category-banner" style="--bg:url('img/tacos.png');background-image:var(--bg)">
+        <h2 class="banner-title">Por taco</h2>
+        <p class="banner-sub">Con cilantro, cebolla y salsas</p>
+      </header>
+      <div class="items-grid">
+        <article class="item-card">
+          <h3 class="item-name">Pastor</h3>
+          <p class="item-desc">Con piña, cilantro y cebolla</p>
+          <span class="item-price">$18</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Suadero</h3>
+          <p class="item-desc">Suave y jugoso</p>
+          <span class="item-price">$20</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Asada</h3>
+          <p class="item-desc">Carne de res asada</p>
+          <span class="item-price">$22</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Campechano</h3>
+          <p class="item-desc">Mezcla de carnes</p>
+          <span class="item-price">$22</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section category" id="orden-cuatro">
+      <header class="category-banner" style="--bg:url('img/orden.png');background-image:var(--bg)">
+        <h2 class="banner-title">Orden de 4 tacos</h2>
+        <p class="banner-sub">Incluye salsas y limón</p>
+      </header>
+      <div class="items-grid">
+        <article class="item-card">
+          <h3 class="item-name">Orden Pastor (4)</h3>
+          <p class="item-desc">Con piña y salsas</p>
+          <span class="item-price">$70</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Orden Asada (4)</h3>
+          <p class="item-desc">Cilantro y cebolla</p>
+          <span class="item-price">$84</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section category" id="combinados">
+      <header class="category-banner" style="--bg:url('img/combinados.png');background-image:var(--bg)">
+        <h2 class="banner-title">Tacos combinados</h2>
+        <p class="banner-sub">Para los que quieren de todo</p>
+      </header>
+      <div class="items-grid">
+        <article class="item-card">
+          <h3 class="item-name">Campechano</h3>
+          <p class="item-desc">Pastor + suadero</p>
+          <span class="item-price">$22</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Pastor con queso</h3>
+          <p class="item-desc">Fundido y doradito</p>
+          <span class="item-price">$26</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section category" id="papas">
+      <header class="category-banner" style="--bg:url('img/papa.png');background-image:var(--bg)">
+        <h2 class="banner-title">Papas asadas</h2>
+        <p class="banner-sub">Mantequilla, queso y toppings</p>
+      </header>
+      <div class="items-grid items-grid--small">
+        <article class="item-card">
+          <h3 class="item-name">Papa con Pastor</h3>
+          <p class="item-desc">Mantequilla, queso y salsas</p>
+          <span class="item-price">$75</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Papa con Asada</h3>
+          <p class="item-desc">Con crema y tocino</p>
+          <span class="item-price">$85</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section category" id="quesadillas">
+      <header class="category-banner" style="--bg:url('img/quesadilla.png');background-image:var(--bg)">
+        <h2 class="banner-title">Quesadillas</h2>
+        <p class="banner-sub">Harina o maíz, al gusto</p>
+      </header>
+      <div class="items-grid">
+        <article class="item-card">
+          <h3 class="item-name">Gringa de Pastor</h3>
+          <p class="item-desc">Tortilla de harina con queso</p>
+          <span class="item-price">$45</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Quesadilla Sencilla</h3>
+          <p class="item-desc">Con queso Oaxaca</p>
+          <span class="item-price">$30</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section category" id="tortas">
+      <header class="category-banner" style="--bg:url('img/torta.png');background-image:var(--bg)">
+        <h2 class="banner-title">Tortas</h2>
+        <p class="banner-sub">Pan crujiente, frijoles y aguacate</p>
+      </header>
+      <div class="items-grid">
+        <article class="item-card">
+          <h3 class="item-name">Torta de Pastor</h3>
+          <p class="item-desc">Con queso, aguacate y jitomate</p>
+          <span class="item-price">$65</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Torta de Asada</h3>
+          <p class="item-desc">Pan crujiente, frijoles y salsa</p>
+          <span class="item-price">$70</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section category" id="promos">
+      <header class="category-banner" style="--bg:url('img/promos.png');background-image:var(--bg)">
+        <h2 class="banner-title">Promociones</h2>
+        <p class="banner-sub">Válidas en horario señalado</p>
+      </header>
+      <div class="items-grid items-grid--small">
+        <article class="item-card">
+          <h3 class="item-name">2x1 en Pastor</h3>
+          <p class="item-desc">Lunes y martes de 5–7 pm</p>
+          <span class="item-price">$—</span>
+        </article>
+        <article class="item-card">
+          <h3 class="item-name">Combo 4 tacos + bebida</h3>
+          <p class="item-desc">Elige tu carne favorita</p>
+          <span class="item-price">$89</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="section category" id="ubicacion">
+      <header class="category-banner" style="--bg:url('img/brasimix.png');background-image:var(--bg)">
+        <h2 class="banner-title">Ubicación</h2>
+        <p class="banner-sub">Encuéntranos fácilmente</p>
+      </header>
+      <div class="map-box">
+        <iframe
+          src="https://www.google.com/maps?q=Taquería%20Brasimix%20San%20Miguel%20de%20Allende&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen
+          title="Mapa de Taquería Brasimix">
+        </iframe>
+        <p class="map-link">
+          <a href="https://www.google.com/maps?q=Taquería+Brasimix+San+Miguel+de+Allende" target="_blank" rel="noopener noreferrer">
+            Ver en Google Maps
+          </a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="qr-box" aria-hidden="true"></div>
+      <p class="note">¡Gracias por tu visita!</p>
+      <p>Precios en MXN • Sujeto a disponibilidad</p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS (opcional, por si lo necesitas más adelante) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

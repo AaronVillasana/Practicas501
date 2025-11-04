@@ -1,0 +1,164 @@
+/* ——— Paleta ——— */
+:root{
+  --tortilla:#fff3e0; --chili:#000; --cilantro:#1f7a47; --carbon:#0f0e0e;
+  --bg:var(--tortilla); --text:var(--carbon); --muted:#6b5f57;
+  --card:#fff; --border:#efd7bc; --accent:var(--chili); --price:#c62828;
+  --card-radius:24px;
+  --font-body:"Lora",Georgia,serif; --font-headings:"Lora",Georgia,serif;
+}
+
+/* ——— Base ——— */
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+
+/* Fondo fotográfico + overlay cálido */
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2;
+  background:center/cover no-repeat var(--page-bg-image,none);
+  transform:scale(1.02); filter:brightness(.7) saturate(1.05);
+}
+body::after{
+  content:""; position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(80% 60% at 50% 0%,rgba(255,255,255,.55),rgba(255,255,255,.12) 65%,transparent),
+    linear-gradient(180deg,rgba(255,243,224,.9),rgba(255,243,224,.96) 55%,rgba(255,243,224,1));
+  backdrop-filter:blur(2px);
+}
+
+/* Contenedor fluido */
+.container{width:min(100%,1120px);margin:0 auto;padding:0 clamp(12px,4vw,20px)}
+
+/* ——— Header ——— */
+.site-header{
+  position:sticky; top:0; z-index:100; border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,255,255,.92),rgba(255,255,255,.86));
+  backdrop-filter:saturate(1.2) blur(6px);
+}
+.header-inner{display:flex; align-items:center; justify-content:space-between; padding:10px 0; gap:12px}
+
+/* Marca y logo */
+.brand{display:flex; align-items:center; gap:12px}
+.brand-logo{width:100px; height:auto; object-fit:contain; border-radius:10px; filter:drop-shadow(0 6px 12px rgba(0,0,0,.15))}
+.brand-title{margin:0; font:700 1.5rem/1 var(--font-headings)}
+.brand-subtitle{margin:2px 0 0; color:var(--muted); font-size:.95rem}
+
+/* Nav */
+.main-nav{display:flex; gap:8px}
+.nav-link{color:#3a2f2a; text-decoration:none; padding:8px 12px; border-radius:10px; transition:.2s}
+.nav-link:hover{background:#fff; border:1px solid var(--border); color:var(--accent)}
+
+/* Mascota */
+.mascota{
+  width:110px; height:auto; object-fit:contain;
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.15));
+  transition:opacity .3s ease;
+}
+
+/* ——— HERO ——— */
+.hero{
+  padding:50px 0; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; text-align:center;
+}
+.hero-title{
+  margin:0 0 6px;
+  font:700 clamp(24px,5vw,36px)/1 var(--font-headings);
+  color:var(--accent);
+}
+.hero-sub{margin:0; color:var(--carbon); font-size:clamp(14px,2.6vw,16px); max-width:90%}
+.hero-sub span{font-weight:600; color:var(--cilantro)}
+
+/* ——— Secciones y banners ——— */
+.section{padding:clamp(28px,6vw,52px) 0; scroll-margin-top:120px}
+.category{
+  padding:0; border:1px solid var(--border); background:var(--card);
+  border-radius:var(--card-radius); box-shadow:0 10px 25px rgba(0,0,0,.08);
+  margin-bottom:clamp(28px,6vw,52px);
+}
+.category-banner{
+  position:relative; width:100%; height:160px; display:grid; place-items:center;
+  padding:12px; overflow:hidden; border:none;
+  border-top-left-radius:var(--card-radius); border-top-right-radius:var(--card-radius);
+}
+.category-banner::before{
+  content:""; position:absolute; inset:0; z-index:0;
+  background:center/cover no-repeat; background-image:var(--bg,none);
+  filter:saturate(1.1) contrast(1.06) brightness(.9);
+}
+.banner-title{
+  position:relative; z-index:1; margin:0 0 4px;
+  font-family:"Parisienne",cursive;
+  font-size:clamp(22px,4vw,32px);
+  font-weight:400; color:#fff;
+  text-shadow:0 2px 8px rgba(0,0,0,.45);
+}
+.banner-sub{
+  position:relative; z-index:1; margin:0;
+  font-size:clamp(12px,2.8vw,15px); color:#fff;
+  opacity:.9; text-shadow:0 1px 6px rgba(0,0,0,.4)
+}
+.category .items-grid{padding:10px 8px 14px}
+
+/* ——— PLATILLOS: con imagen circular (por defecto) ——— */
+.items-grid{display:grid; grid-template-columns:1fr; gap:0}
+.item-card{
+  background:transparent; box-shadow:none; border:0; border-bottom:1px solid var(--border);
+  display:grid; grid-template-columns:56px 1fr auto; align-items:center; column-gap:12px; padding:12px 4px;
+}
+
+.item-card .item-media img{width:100%; height:100%; object-fit:cover}
+/* Texto */
+.item-name{grid-column:2; margin:0; font-weight:700; font-size:clamp(16px,3.6vw,17px)}
+.item-desc{grid-column:2; margin:2px 0 8px; color:var(--muted); font-size:clamp(13px,3.2vw,15px); line-height:1.35}
+/* Precio */
+.item-price{
+  grid-column:3; justify-self:start; margin-right:60px; align-self:center;
+  font-weight:800; color:var(--price); font-size:clamp(16px,3.6vw,17px);
+  font-variant-numeric:tabular-nums; white-space:nowrap
+}
+
+/* ——— Mapa ——— */
+.map-box{display:grid; place-items:center; padding:24px; margin-bottom:60px}
+.map-box iframe{width:100%; height:360px; border:none; border-radius:16px; box-shadow:0 8px 24px rgba(0,0,0,.1)}
+.map-link{text-align:center; margin-top:50px}
+.map-link a{
+  display:inline-block; background:#e8fbe8; color:#176e1b; font-weight:700;
+  padding:10px 22px; border-radius:999px;
+  text-decoration:none; box-shadow:0 4px 8px rgba(0,0,0,.08)
+}
+.map-link a:hover{background:#d4f5d4}
+
+/* ——— Footer ——— */
+.site-footer{
+  border-top:1px solid var(--border);
+  background:linear-gradient(180deg,rgba(255,243,224,.9),rgba(255,255,255,.95))
+}
+.footer-inner{padding:18px 0 30px; text-align:center}
+.footer-inner p{margin:6px 0; color:var(--muted)}
+.footer-inner .note{color:#1a1a1a; font-weight:700}
+.qr-box{
+  width:140px; height:140px; margin:8px auto 12px;
+  border:2px dashed var(--border); border-radius:12px;
+  background:#fff; display:grid; place-items:center;
+  color:var(--muted); font-size:.85rem
+}
+.qr-box::before{content:"QR"}
+
+/* ——— Responsive ——— */
+@media (max-width:900px){
+  .brand-logo{width:88px}
+  .mascota{width:96px}
+  .category-banner{height:140px}
+}
+
+/* 🔹 A partir de aquí, oculta la mascota en celulares */
+@media (max-width:640px){
+  .header-inner{flex-direction:column; align-items:center; text-align:center; gap:10px}
+  .brand{flex-direction:column; align-items:center}
+  .main-nav{gap:6px; justify-content:center}
+  .nav-link{padding:6px 10px}
+  .category-banner{height:130px; padding:10px}
+  .item-card{grid-template-columns:48px 1fr auto; padding:10px 2px}
+  /* 🔸 Oculta la imagen mascota en pantallas pequeñas */
+  .mascota{display:none !important;}
+}
